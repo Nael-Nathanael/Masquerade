@@ -3,35 +3,28 @@ package id.ac.ui.cs.mobileprogramming.nathanael.masquerade;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.ChatRoom;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.viewmodel.PublicChatroomPagerNavigationViewModel;
 
 public class LandingActivity extends AppCompatActivity {
 
-    FirebaseDatabase database;
     private AppBarConfiguration mAppBarConfiguration;
     private SharedPreferences sharedPreferences;
-    private ArrayList<ChatRoom> chatRooms;
+    private boolean canExit;
+    private PublicChatroomPagerNavigationViewModel navigationModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,29 +34,6 @@ public class LandingActivity extends AppCompatActivity {
         initAttrs();
         initToolbar();
         initDrawer();
-        fetchPublicRoomsFromDatabase();
-    }
-
-    private void fetchPublicRoomsFromDatabase() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chatrooms").child("public");
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                chatRooms = new ArrayList<>();
-                for(DataSnapshot childsnap : snapshot.getChildren()) {
-                    ChatRoom chatRoom = childsnap.getValue(ChatRoom.class);
-                    chatRooms.add(chatRoom);
-                }
-                Log.d("NaelsTest", chatRooms.toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("NaelsTest", String.valueOf(error));
-            }
-        };
-
-        reference.addListenerForSingleValueEvent(valueEventListener);
     }
 
     private void initDrawer() {
@@ -92,7 +62,13 @@ public class LandingActivity extends AppCompatActivity {
 
     private void initAttrs() {
         sharedPreferences = getSharedPreferences("masq-auth", Context.MODE_PRIVATE);
-        database = FirebaseDatabase.getInstance();
+        navigationModel = new ViewModelProvider(this).get(PublicChatroomPagerNavigationViewModel.class);
+
+        final Observer<Integer> navigationObserver = targetPage -> {
+            canExit = targetPage == 0;
+        };
+
+        navigationModel.getCurrentPage().observe(LandingActivity.this, navigationObserver);
     }
 
     @Override
@@ -100,5 +76,18 @@ public class LandingActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        if (navController.getCurrentDestination().getId() == R.id.nav_public_chatroom) {
+            if (!canExit) {
+                navigationModel.getCurrentPage().setValue(0);
+                return;
+            }
+        }
+
+        super.onBackPressed();
     }
 }

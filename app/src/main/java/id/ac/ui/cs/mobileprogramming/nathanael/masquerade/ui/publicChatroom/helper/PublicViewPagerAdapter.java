@@ -15,11 +15,6 @@ public class PublicViewPagerAdapter extends FragmentStateAdapter {
             new chatFragment(),
     };
 
-    public final String[] mFragmentNames = new String[]{
-            "Chat Room List",
-            "Chat Room"
-    };
-
     public PublicViewPagerAdapter(FragmentActivity fa) {
         super(fa);
     }
