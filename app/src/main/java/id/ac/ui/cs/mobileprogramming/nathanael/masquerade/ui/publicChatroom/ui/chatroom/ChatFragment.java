@@ -107,37 +107,34 @@ public class ChatFragment extends Fragment {
         Button sendButton = view.findViewById(R.id.send_button);
         newMsgField = view.findViewById(R.id.new_text_field);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Message newmsg = new Message();
+        sendButton.setOnClickListener(v -> {
+            Message newmsg = new Message();
 
-                String newId = database
-                        .getReference()
-                        .child("chatrooms")
-                        .child("public")
-                        .child(selectedChatroomId)
-                        .child("messages")
-                        .push()
-                        .getKey();
+            String newId = database
+                    .getReference()
+                    .child("chatrooms")
+                    .child("public")
+                    .child(selectedChatroomId)
+                    .child("messages")
+                    .push()
+                    .getKey();
 
-                newmsg.id = newId;
-                newmsg.datetime = String.valueOf(android.text.format.DateFormat.format("MM/dd/yyyy hh:mm", new java.util.Date()));
-                newmsg.content = newMsgField.getText().toString();
-                newmsg.sender = sharedPreferences.getString("username", null);
+            newmsg.id = newId;
+            newmsg.datetime = String.valueOf(android.text.format.DateFormat.format("MM/dd/yyyy hh:mm", new java.util.Date()));
+            newmsg.content = newMsgField.getText().toString();
+            newmsg.sender = sharedPreferences.getString("username", null);
 
-                assert newId != null;
-                database
-                        .getReference()
-                        .child("chatrooms")
-                        .child("public")
-                        .child(selectedChatroomId)
-                        .child("messages")
-                        .child(newId)
-                        .setValue(
-                                newmsg
-                        );
-            }
+            assert newId != null;
+            database
+                    .getReference()
+                    .child("chatrooms")
+                    .child("public")
+                    .child(selectedChatroomId)
+                    .child("messages")
+                    .child(newId)
+                    .setValue(
+                            newmsg
+                    );
         });
     }
 }

@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,8 +22,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.component.CreatePublicChatroomDialog;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.ChatRoom;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 
@@ -59,7 +63,7 @@ public class ChatRoomFragment extends Fragment {
                     chatRooms.add(chatRoom);
                 }
 
-                RecyclerView recyclerView = (RecyclerView) view;
+                RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.setAdapter(new MyChatRoomListRecyclerViewAdapter(requireActivity(), chatRooms));
             }
@@ -71,6 +75,13 @@ public class ChatRoomFragment extends Fragment {
         };
 
         reference.addValueEventListener(valueEventListener);
+
+        FloatingActionButton create_fab = view.findViewById(R.id.create_room_fab);
+        create_fab.setOnClickListener(v -> {
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            CreatePublicChatroomDialog publicChatroomDialog = new CreatePublicChatroomDialog();
+            publicChatroomDialog.show(fragmentManager, "dialog");
+        });
 
         return view;
     }

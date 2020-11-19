@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.example.navigationdrawertest.ui.home.ui.list.ChatRoomFragment"
+    android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.list.ChatRoomFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     android:background="@android:color/background_dark"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.publicChatroom.ui.list.ChatRoomFragment"
-    tools:listitem="@layout/chat_room_fragment_item" />
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:name="com.example.navigationdrawertest.ui.home.ui.list.ChatRoomFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@android:color/background_dark"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".ui.publicChatroom.ui.list.ChatRoomFragment"
+        tools:listitem="@layout/chat_room_fragment_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/create_room_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/create_room_fab" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

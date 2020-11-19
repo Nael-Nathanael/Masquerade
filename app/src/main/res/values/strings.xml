@@ -18,4 +18,8 @@
     <string name="online_logo">ONLINE</string>
     <string name="roomlogo">Room Logo</string>
     <string name="type">Type...</string>
+    <string name="create_room_fab">Create Room</string>
+    <string name="create_public_room">Create Public Room</string>
+    <string name="create">Create</string>
+    <string name="room_name">Room Name</string>
 </resources>
