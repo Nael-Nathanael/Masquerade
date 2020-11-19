@@ -1,18 +1,18 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.chatroom.chatFragment;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.chatroom.ChatFragment;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.list.ChatRoomFragment;
 
 public class PublicViewPagerAdapter extends FragmentStateAdapter {
 
     private final Fragment[] mFragments = new Fragment[]{
             new ChatRoomFragment(),
-            new chatFragment(),
+            new ChatFragment(),
     };
 
     public PublicViewPagerAdapter(FragmentActivity fa) {

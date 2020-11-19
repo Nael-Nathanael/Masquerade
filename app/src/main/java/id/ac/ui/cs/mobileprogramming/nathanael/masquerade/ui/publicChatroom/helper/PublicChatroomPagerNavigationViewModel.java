@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.viewmodel;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,6 +7,7 @@ public class PublicChatroomPagerNavigationViewModel extends ViewModel {
 
     private MutableLiveData<Integer> currentPage;
     private MutableLiveData<Boolean> swipeActive;
+    private MutableLiveData<String> selectedChatroomId;
 
     public MutableLiveData<Integer> getCurrentPage() {
         if (currentPage == null) {
@@ -20,5 +21,12 @@ public class PublicChatroomPagerNavigationViewModel extends ViewModel {
             swipeActive = new MutableLiveData<>(false);
         }
         return swipeActive;
+    }
+
+    public MutableLiveData<String> getSelectedChatroomId() {
+        if (selectedChatroomId == null) {
+            selectedChatroomId = new MutableLiveData<>(null);
+        }
+        return selectedChatroomId;
     }
 }

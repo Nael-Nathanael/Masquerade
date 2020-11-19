@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.viewmodel.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.ChatRoom;
 
 /**
@@ -48,8 +48,8 @@ public class MyChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<MyCh
         holder.mContentView.setText(mValues.get(position).name);
 
         holder.mView.setOnClickListener(v -> {
-            Log.d("NaelTest", "One View Clicked on " + mValues.get(position).id);
             navigationModel.getCurrentPage().setValue(1);
+            navigationModel.getSelectedChatroomId().setValue(mValues.get(position).id);
         });
     }
 

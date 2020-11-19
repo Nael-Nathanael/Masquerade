@@ -17,7 +17,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.viewmodel.PublicChatroomPagerNavigationViewModel;
+import java.util.Objects;
+
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -81,7 +83,7 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        if (navController.getCurrentDestination().getId() == R.id.nav_public_chatroom) {
+        if (Objects.requireNonNull(navController.getCurrentDestination()).getId() == R.id.nav_public_chatroom) {
             if (!canExit) {
                 navigationModel.getCurrentPage().setValue(0);
                 return;

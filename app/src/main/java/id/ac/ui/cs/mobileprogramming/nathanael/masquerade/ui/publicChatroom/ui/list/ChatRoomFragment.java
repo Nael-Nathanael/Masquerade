@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.ChatRoom;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.viewmodel.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 
 /**
  * A fragment representing a list of Items.

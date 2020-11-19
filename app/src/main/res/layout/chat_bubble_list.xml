@@ -8,6 +8,8 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
+    android:background="@android:color/background_dark"
+    android:paddingTop="5dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.publicChatroom.ui.chatroom.chatFragment"
+    tools:context=".ui.publicChatroom.ui.chatroom.ChatFragment"
     tools:listitem="@layout/chat_bubble" />

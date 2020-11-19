@@ -7,26 +7,29 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.chatroom.dummy.DummyContent.DummyItem;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
+
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
+ * {@link RecyclerView.Adapter} that can display {@link Message}.
  */
 public class MyChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRoomRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Message> mValues;
 
-    public MyChatRoomRecyclerViewAdapter(List<DummyItem> items) {
+    public MyChatRoomRecyclerViewAdapter(List<Message> items) {
         mValues = items;
     }
 
+    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater
+                .from(parent.getContext())
                 .inflate(R.layout.chat_bubble, parent, false);
         return new ViewHolder(view);
     }
@@ -34,8 +37,9 @@ public class MyChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.sender.setText(mValues.get(position).sender);
+        holder.content.setText(mValues.get(position).content);
+        holder.datetime.setText(mValues.get(position).datetime);
     }
 
     @Override
@@ -43,22 +47,19 @@ public class MyChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRo
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView sender;
+        public final TextView content;
+        public final TextView datetime;
+        public Message mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            sender = (TextView) view.findViewById(R.id.sender);
+            content = (TextView) view.findViewById(R.id.content);
+            datetime = (TextView) view.findViewById(R.id.datetime);
         }
     }
 }
