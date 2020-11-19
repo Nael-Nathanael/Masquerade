@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.slideshow;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,22 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 
-public class SlideshowFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private SettingsViewModel settingsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        settingsViewModel =
+                new ViewModelProvider(this).get(SettingsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_settings, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 }

@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_public_chatroom">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_public_chatroom"
+        android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.PublicChatroomFragment"
+        android:label="@string/menu_public_chat_room_list"
+        tools:layout="@layout/fragment_public_chatroom" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_private_chatroom"
+        android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom.PrivateChatroomFragment"
+        android:label="@string/menu_private_chat_room"
+        tools:layout="@layout/fragment_private_chatroom" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_notes"
+        android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.notes.NotesFragment"
+        android:label="@string/menu_notes"
+        tools:layout="@layout/fragment_notes" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.notes.NotesFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

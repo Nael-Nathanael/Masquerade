@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.home;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 
-public class HomeFragment extends Fragment {
+public class PrivateChatroomFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private PrivateChatroomViewModel privateChatroomViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        privateChatroomViewModel =
+                new ViewModelProvider(this).get(PrivateChatroomViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_private_chatroom, container, false);
+        final TextView textView = root.findViewById(R.id.text_gallery);
+        privateChatroomViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

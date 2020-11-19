@@ -1,14 +1,14 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.home;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class PublicChatroomViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public PublicChatroomViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }

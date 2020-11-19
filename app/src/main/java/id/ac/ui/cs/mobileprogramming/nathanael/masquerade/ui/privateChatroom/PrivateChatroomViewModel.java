@@ -1,16 +1,16 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.slideshow;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class PrivateChatroomViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public PrivateChatroomViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is gallery fragment");
     }
 
     public LiveData<String> getText() {

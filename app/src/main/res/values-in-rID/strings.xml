@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">MASUK</string>
+    <string name="username">NAMA PENGGUNA</string>
+    <string name="login_logo">Logo Masuk</string>
+    <string name="title_activity_landing">AktivitasAwal</string>
+    <string name="navigation_drawer_open">Buka Navigasi Samping</string>
+    <string name="navigation_drawer_close">Tutup Navigasi Samping</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_desc">Klop Navigasi</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="menu_home">Halaman Utama</string>
+    <string name="menu_private_chat_room">Ruang Chat Personal</string>
+    <string name="menu_notes">Catatan Saya</string>
+    <string name="menu_public_chat_room_list">Ruang Chat Publik</string>
+</resources>
