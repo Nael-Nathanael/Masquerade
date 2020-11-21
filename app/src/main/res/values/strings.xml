@@ -33,4 +33,9 @@
     <string name="version_settings">V beta.1</string>
     <string name="subscribe_button">Subscribe Button</string>
     <string name="unsubscribe_button">Unsubscribe Button</string>
+    <string name="menu_subscribed_chat_room">Subscribed Chatroom</string>
+    <string name="unsubscribe_dialog_title">Unsubscribe?</string>
+    <string name="unsubscribe_dialog_message">\"Are you sure you want to unsubscribe this chatroom ?\"</string>
+    <string name="unsubscribe_dialog_neutral">Cancel</string>
+    <string name="unsubscribe_dialog_confirm">Confirm</string>
 </resources>

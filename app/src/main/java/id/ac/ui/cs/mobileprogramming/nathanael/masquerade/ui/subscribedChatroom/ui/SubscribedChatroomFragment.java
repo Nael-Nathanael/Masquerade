@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.chatroom;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -34,12 +34,12 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.adapter.Chatroo
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.SubscribedChatroomViewModel;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.helper.SubscribedChatroomNavigationViewModel;
 
 /**
  * A fragment representing a list of Items.
  */
-public class PublicChatFragment extends Fragment {
+public class SubscribedChatroomFragment extends Fragment {
 
     FloatingActionButton subscribeButton;
     FloatingActionButton unsubscribeButton;
@@ -50,6 +50,7 @@ public class PublicChatFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private ChatroomRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
+    private SubscribedChatroomNavigationViewModel subscribedChatroomNavigationViewModel;
     private SubscribedChatroomViewModel subscribedChatroomViewModel;
     private String current_name;
 
@@ -57,20 +58,39 @@ public class PublicChatFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public PublicChatFragment() {
+    public SubscribedChatroomFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
+        sharedPreferences = requireActivity().getSharedPreferences("masq-auth", Context.MODE_PRIVATE);
+        messages = new ArrayList<>();
+        adapter = new ChatroomRecyclerViewAdapter(messages);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        messages = new ArrayList<>();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.chat_bubble_list, container, false);
 
         // Set the adapter
         Context context = view.getContext();
-        database = FirebaseDatabase.getInstance();
-        PublicChatroomPagerNavigationViewModel navigationModel = new ViewModelProvider(requireActivity()).get(PublicChatroomPagerNavigationViewModel.class);
-        sharedPreferences = requireActivity().getSharedPreferences("masq-auth", Context.MODE_PRIVATE);
+        subscribedChatroomNavigationViewModel = new ViewModelProvider(requireActivity()).get(SubscribedChatroomNavigationViewModel.class);
         subscribedChatroomViewModel = new ViewModelProvider(requireActivity()).get(SubscribedChatroomViewModel.class);
+
+        recyclerView = view.findViewById(R.id.note_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
 
         final Observer<String> chatRoomObserver = selectedChatroomId -> {
             this.selectedChatroomId = selectedChatroomId;
@@ -80,12 +100,13 @@ public class PublicChatFragment extends Fragment {
                 view.findViewById(R.id.chat_layout).setVisibility(View.GONE);
                 view.findViewById(R.id.no_content).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.subscribe_button).setVisibility(View.GONE);
+                view.findViewById(R.id.unsubscribe_button).setVisibility(View.GONE);
                 return;
             } else {
                 view.findViewById(R.id.note_list).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.chat_layout).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.no_content).setVisibility(View.GONE);
-                view.findViewById(R.id.subscribe_button).setVisibility(View.VISIBLE);
+                refreshSubcription();
             }
 
             DatabaseReference reference = database
@@ -150,17 +171,16 @@ public class PublicChatFragment extends Fragment {
 
             reference.addChildEventListener(childEventListener);
         };
-
-        navigationModel.getSelectedChatroomId().observe(getViewLifecycleOwner(), chatRoomObserver);
+        subscribedChatroomNavigationViewModel.getSelectedChatroomId().observe(getViewLifecycleOwner(), chatRoomObserver);
 
         final Observer<String> chatRoomNameObserver = name -> {
             this.current_name = name;
         };
-
-        navigationModel.getSelectedChatroomName().observe(getViewLifecycleOwner(), chatRoomNameObserver);
+        subscribedChatroomNavigationViewModel.getSelectedChatroomName().observe(getViewLifecycleOwner(), chatRoomNameObserver);
 
         subscribeButton = view.findViewById(R.id.subscribe_button);
         unsubscribeButton = view.findViewById(R.id.unsubscribe_button);
+
 
         View.OnClickListener subscribe = v -> {
 
@@ -197,29 +217,7 @@ public class PublicChatFragment extends Fragment {
 
         unsubscribeButton.setOnClickListener(unsubscribe);
 
-        refreshSubcription();
-
         return view;
-    }
-
-    private void refreshSubcription() {
-        subscribedChatroomViewModel.getAllSubscribedChatroom().observe(requireActivity(), subscriptions -> {
-            boolean found = false;
-            for (SubscribedChatroom subscribedChatroom : subscriptions) {
-                if (subscribedChatroom.id.equals(selectedChatroomId)) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (found) {
-                subscribeButton.setVisibility(View.GONE);
-                unsubscribeButton.setVisibility(View.VISIBLE);
-            } else {
-                subscribeButton.setVisibility(View.VISIBLE);
-                unsubscribeButton.setVisibility(View.GONE);
-            }
-        });
     }
 
     @Override
@@ -239,7 +237,7 @@ public class PublicChatFragment extends Fragment {
             String newId = database
                     .getReference()
                     .child("chatrooms")
-                    .child("public")
+                    .child("private")
                     .child(selectedChatroomId)
                     .child("messages")
                     .push()
@@ -254,7 +252,7 @@ public class PublicChatFragment extends Fragment {
             database
                     .getReference()
                     .child("chatrooms")
-                    .child("public")
+                    .child("private")
                     .child(selectedChatroomId)
                     .child("messages")
                     .child(newId)
@@ -263,6 +261,29 @@ public class PublicChatFragment extends Fragment {
                     );
 
             newMsgField.setText(null);
+        });
+    }
+
+    private void refreshSubcription() {
+        subscribedChatroomViewModel.getAllSubscribedChatroom().observe(requireActivity(), subscriptions -> {
+            Log.d("NaelsTest", "initial: " + selectedChatroomId);
+            boolean found = false;
+            for (SubscribedChatroom subscribedChatroom : subscriptions) {
+                Log.d("NaelsTest", "matching " + subscribedChatroom.id);
+                if (subscribedChatroom.id.equals(selectedChatroomId)) {
+                    Log.d("NaelsTest", "matched");
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                subscribeButton.setVisibility(View.GONE);
+                unsubscribeButton.setVisibility(View.VISIBLE);
+            } else {
+                subscribeButton.setVisibility(View.VISIBLE);
+                unsubscribeButton.setVisibility(View.GONE);
+            }
         });
     }
 

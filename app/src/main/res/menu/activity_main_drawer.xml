@@ -12,6 +12,12 @@
             android:id="@+id/nav_private_chatroom"
             android:icon="@drawable/ic_baseline_emoji_people_24"
             android:title="@string/menu_private_chat_room" />
+
+        <item
+            android:id="@+id/nav_subscribed_chatroom"
+            android:icon="@drawable/ic_baseline_schedule_24"
+            android:title="@string/menu_subscribed_chat_room" />
+
         <item
             android:id="@+id/nav_notes"
             android:icon="@drawable/ic_baseline_sticky_note_2_24"

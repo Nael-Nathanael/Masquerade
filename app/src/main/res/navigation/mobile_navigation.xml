@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_private_chatroom" />
 
     <fragment
+        android:id="@+id/nav_subscribed_chatroom"
+        android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.SubscribedChatroomBaseFragment"
+        android:label="@string/menu_subscribed_chat_room"
+        tools:layout="@layout/fragment_private_chatroom" />
+
+    <fragment
         android:id="@+id/nav_notes"
         android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.notes.NotesFragment"
         android:label="@string/menu_notes"

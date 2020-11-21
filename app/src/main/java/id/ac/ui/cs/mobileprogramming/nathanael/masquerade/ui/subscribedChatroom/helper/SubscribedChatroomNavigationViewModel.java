@@ -1,34 +1,26 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.helper;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class PublicChatroomPagerNavigationViewModel extends ViewModel {
+public class SubscribedChatroomNavigationViewModel extends ViewModel {
 
-    private MutableLiveData<Integer> currentPage;
-    private MutableLiveData<Boolean> swipeActive;
     private MutableLiveData<String> selectedChatroomId;
     private MutableLiveData<String> selectedChatroomName;
-
-    public MutableLiveData<Integer> getCurrentPage() {
-        if (currentPage == null) {
-            currentPage = new MutableLiveData<>(0);
-        }
-        return currentPage;
-    }
-
-    public MutableLiveData<Boolean> getSwipeActive() {
-        if (swipeActive == null) {
-            swipeActive = new MutableLiveData<>(false);
-        }
-        return swipeActive;
-    }
+    private MutableLiveData<String> markedToDeleteId;
 
     public MutableLiveData<String> getSelectedChatroomId() {
         if (selectedChatroomId == null) {
             selectedChatroomId = new MutableLiveData<>(null);
         }
         return selectedChatroomId;
+    }
+
+    public MutableLiveData<String> getMarkedToDelete() {
+        if (markedToDeleteId == null) {
+            markedToDeleteId = new MutableLiveData<>(null);
+        }
+        return markedToDeleteId;
     }
 
     public MutableLiveData<String> getSelectedChatroomName() {
