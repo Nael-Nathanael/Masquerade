@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.chatroom;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,39 +28,60 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.adapter.ChatroomRecyclerViewAdapter;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom.helper.PrivateChatroomViewModel;
 
 /**
  * A fragment representing a list of Items.
  */
-public class ChatFragment extends Fragment {
+public class PrivateChatroomFragment extends Fragment {
 
     private FirebaseDatabase database;
     private ArrayList<Message> messages;
     private String selectedChatroomId;
     private EditText newMsgField;
     private SharedPreferences sharedPreferences;
-    private MyChatRoomRecyclerViewAdapter adapter;
+    private ChatroomRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
+    private PrivateChatroomViewModel privateChatroomViewModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ChatFragment() {
+    public PrivateChatroomFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
+        sharedPreferences = requireActivity().getSharedPreferences("masq-auth", Context.MODE_PRIVATE);
+        messages = new ArrayList<>();
+        adapter = new ChatroomRecyclerViewAdapter(messages);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        messages = new ArrayList<>();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.chat_bubble_list, container, false);
 
         // Set the adapter
         Context context = view.getContext();
-        database = FirebaseDatabase.getInstance();
-        PublicChatroomPagerNavigationViewModel navigationModel = new ViewModelProvider(requireActivity()).get(PublicChatroomPagerNavigationViewModel.class);
-        sharedPreferences = requireActivity().getSharedPreferences("masq-auth", Context.MODE_PRIVATE);
+        privateChatroomViewModel = new ViewModelProvider(requireActivity()).get(PrivateChatroomViewModel.class);
+
+        recyclerView = view.findViewById(R.id.note_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
 
         final Observer<String> chatRoomObserver = selectedChatroomId -> {
             this.selectedChatroomId = selectedChatroomId;
@@ -79,7 +100,7 @@ public class ChatFragment extends Fragment {
             DatabaseReference reference = database
                     .getReference()
                     .child("chatrooms")
-                    .child("public")
+                    .child("private")
                     .child(selectedChatroomId)
                     .child("messages");
 
@@ -92,9 +113,9 @@ public class ChatFragment extends Fragment {
                         messages.add(single_message);
                     }
 
-                    recyclerView = (RecyclerView) view.findViewById(R.id.note_list);
+                    recyclerView = view.findViewById(R.id.note_list);
                     recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    adapter = new MyChatRoomRecyclerViewAdapter(messages);
+                    adapter = new ChatroomRecyclerViewAdapter(messages);
                     recyclerView.setAdapter(adapter);
                 }
 
@@ -139,8 +160,7 @@ public class ChatFragment extends Fragment {
             reference.addChildEventListener(childEventListener);
         };
 
-        navigationModel.getSelectedChatroomId().observe(getViewLifecycleOwner(), chatRoomObserver);
-
+        privateChatroomViewModel.getSelectedChatroomId().observe(getViewLifecycleOwner(), chatRoomObserver);
 
         return view;
     }
@@ -162,7 +182,7 @@ public class ChatFragment extends Fragment {
             String newId = database
                     .getReference()
                     .child("chatrooms")
-                    .child("public")
+                    .child("private")
                     .child(selectedChatroomId)
                     .child("messages")
                     .push()
@@ -177,7 +197,7 @@ public class ChatFragment extends Fragment {
             database
                     .getReference()
                     .child("chatrooms")
-                    .child("public")
+                    .child("private")
                     .child(selectedChatroomId)
                     .child("messages")
                     .child(newId)

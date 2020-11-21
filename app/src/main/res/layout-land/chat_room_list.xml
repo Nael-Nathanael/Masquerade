@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/background_dark"
             app:layoutManager="LinearLayoutManager"
-            tools:context=".ui.publicChatroom.ui.list.ChatRoomFragment"
+            tools:context=".ui.publicChatroom.ui.list.ChatRoomListFragment"
             tools:layout_editor_absoluteX="16dp"
             tools:listitem="@layout/chat_room_fragment_item">
 

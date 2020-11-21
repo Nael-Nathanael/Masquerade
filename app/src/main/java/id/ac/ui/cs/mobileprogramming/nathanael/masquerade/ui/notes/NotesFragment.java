@@ -1,12 +1,8 @@
 package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.notes;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.NotesViewModel;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.provider.NotesProvider;
 
 public class NotesFragment extends Fragment {
 
@@ -53,37 +49,15 @@ public class NotesFragment extends Fragment {
         Button submit_button = view.findViewById(R.id.send_note_button);
         submit_button.setOnClickListener(v -> {
 
-            ContentValues values = new ContentValues();
-            values.put(NotesProvider.SENDER, sharedPreferences.getString("username", null));
-            values.put(NotesProvider.CONTENT, new_note_field.getText().toString());
-
-            Thread inserting = new Thread(() -> {
-                String url = NotesProvider.URL;
-                Uri uri = Uri.parse(url);
-                currentActivity
-                        .getContentResolver()
-                        .insert(
-                                uri, values
-                        );
-            });
-
-            inserting.start();
+            notesViewModel.insert(
+                    new Notes(
+                            new_note_field.getText().toString(),
+                            sharedPreferences.getString("username", null)
+                    )
+            );
 
             new_note_field.setText(null);
         });
-
-        Thread getting = new Thread(() -> {
-
-            String url = NotesProvider.URL + "/" + NotesProvider.SPECIFIC;
-            Uri uri = Uri.parse(url);
-            Cursor query = currentActivity.getContentResolver().query(
-                    uri, null, "latest", null, null
-            );
-
-            Log.d("ProviderNael", String.valueOf(query));
-        });
-
-        getting.start();
 
         return view;
     }

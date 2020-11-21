@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.chatroom;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +17,11 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
 /**
  * {@link RecyclerView.Adapter} that can display {@link Message}.
  */
-public class MyChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRoomRecyclerViewAdapter.ViewHolder> {
+public class ChatroomRecyclerViewAdapter extends RecyclerView.Adapter<ChatroomRecyclerViewAdapter.ViewHolder> {
 
     private final List<Message> mValues;
 
-    public MyChatRoomRecyclerViewAdapter(List<Message> items) {
+    public ChatroomRecyclerViewAdapter(List<Message> items) {
         mValues = items;
     }
 
@@ -57,9 +57,9 @@ public class MyChatRoomRecyclerViewAdapter extends RecyclerView.Adapter<MyChatRo
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            sender = (TextView) view.findViewById(R.id.sender);
-            content = (TextView) view.findViewById(R.id.content);
-            datetime = (TextView) view.findViewById(R.id.datetime);
+            sender = view.findViewById(R.id.sender);
+            content = view.findViewById(R.id.content);
+            datetime = view.findViewById(R.id.datetime);
         }
     }
 }

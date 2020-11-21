@@ -11,7 +11,9 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
 
 @Database(entities = {Notes.class}, version = 1, exportSchema = false)
 public abstract class NotesDatabase extends RoomDatabase {
+
     public abstract NotesDao notesDao();
+
     private static NotesDatabase INSTANCE;
 
     public static NotesDatabase getDatabase(final Context context) {

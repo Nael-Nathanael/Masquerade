@@ -1,6 +1,5 @@
 package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.list;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +31,7 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.help
 /**
  * A fragment representing a list of Items.
  */
-public class ChatRoomFragment extends Fragment {
+public class ChatRoomListFragment extends Fragment {
 
     private FirebaseDatabase database;
     private ArrayList<ChatRoom> chatRooms;
@@ -45,7 +44,7 @@ public class ChatRoomFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ChatRoomFragment() {
+    public ChatRoomListFragment() {
     }
 
     @Override
@@ -53,9 +52,10 @@ public class ChatRoomFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.chat_room_list, container, false);
 
-        database = FirebaseDatabase.getInstance();
         targetActivity = requireActivity();
         navigationModel = new ViewModelProvider(requireActivity()).get(PublicChatroomPagerNavigationViewModel.class);
+
+        database = FirebaseDatabase.getInstance();
         reference = database.getReference().child("chatrooms").child("public");
 
         navigationModel.getCurrentPage().setValue(0);
@@ -77,7 +77,7 @@ public class ChatRoomFragment extends Fragment {
                     chatRooms.add(chatRoom);
                 }
 
-                RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.note_list);
+                RecyclerView recyclerView = view.findViewById(R.id.note_list);
                 recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                 recyclerView.setAdapter(new MyChatRoomListRecyclerViewAdapter(targetActivity, chatRooms));
             }

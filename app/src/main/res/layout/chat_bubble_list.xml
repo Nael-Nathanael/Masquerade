@@ -18,7 +18,7 @@
         android:layout_weight="1"
         android:paddingTop="5dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".ui.publicChatroom.ui.chatroom.ChatFragment"
+        tools:context=".ui.publicChatroom.ui.chatroom.PublicChatFragment"
         tools:listitem="@layout/chat_bubble">
 
     </androidx.recyclerview.widget.RecyclerView>
