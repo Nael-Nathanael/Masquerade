@@ -30,7 +30,7 @@
     <string name="subscribed_chatroom">Subscribed Chatroom</string>
     <string name="messages_sent">Messages sent</string>
     <string name="log_out">Log out</string>
-    <string name="version_settings">V beta.1</string>
+    <string name="version_settings" translatable="false">V beta.1</string>
     <string name="subscribe_button">Subscribe Button</string>
     <string name="unsubscribe_button">Unsubscribe Button</string>
     <string name="menu_subscribed_chat_room">Subscribed Chatroom</string>

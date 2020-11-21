@@ -13,4 +13,27 @@
     <string name="menu_private_chat_room">Ruang Chat Personal</string>
     <string name="menu_notes">Catatan Saya</string>
     <string name="menu_public_chat_room_list">Ruang Chat Publik</string>
+    <string name="menu_settings">Pengaturan</string>
+    <string name="online_logo">ONLINE</string>
+    <string name="roomlogo">Logo Ruang</string>
+    <string name="type">Ketik...</string>
+    <string name="create_room_fab">Buat Ruang</string>
+    <string name="create_public_room">Buat Ruang Publik</string>
+    <string name="create">Buat</string>
+    <string name="room_name">Nama Ruang</string>
+    <string name="preview_image_without_chat">Tanpa Chat</string>
+    <string name="password">Password</string>
+    <string name="enter_private_room">Masuk Ruang Pribadi</string>
+    <string name="settings_logo">Logo Pengaturan</string>
+    <string name="logged_in_as">Masuk sebagai</string>
+    <string name="subscribed_chatroom">Ruang Tersubskripsi</string>
+    <string name="messages_sent">Pesan Terkirim</string>
+    <string name="log_out">Keluar</string>
+    <string name="subscribe_button">Tombol langganan</string>
+    <string name="unsubscribe_button">Tombol hapus langganan</string>
+    <string name="menu_subscribed_chat_room">Ruang Tersubskripsi</string>
+    <string name="unsubscribe_dialog_title">Hapus Subskripsi?</string>
+    <string name="unsubscribe_dialog_message">Anda yakin ingin menghapus subskripsi ruang ini?</string>
+    <string name="unsubscribe_dialog_neutral">Batalkan</string>
+    <string name="unsubscribe_dialog_confirm">Konfirmasi</string>
 </resources>

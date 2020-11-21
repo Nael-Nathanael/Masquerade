@@ -1,6 +1,7 @@
 package id.ac.ui.cs.mobileprogramming.nathanael.masquerade;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.services.ChatRoomSubscriptionNotificationService;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 
 public class LandingActivity extends AppCompatActivity {
@@ -32,6 +34,8 @@ public class LandingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+
+        stopService(new Intent(getApplicationContext(), ChatRoomSubscriptionNotificationService.class));
 
         initAttrs();
         initToolbar();
@@ -97,5 +101,11 @@ public class LandingActivity extends AppCompatActivity {
         }
 
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        startService(new Intent(getApplicationContext(), ChatRoomSubscriptionNotificationService.class));
     }
 }

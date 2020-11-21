@@ -217,12 +217,6 @@ public class SubscribedChatroomFragment extends Fragment {
 
         unsubscribeButton.setOnClickListener(unsubscribe);
 
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         Button sendButton = view.findViewById(R.id.send_note_button);
         newMsgField = view.findViewById(R.id.new_note_field);
@@ -237,7 +231,7 @@ public class SubscribedChatroomFragment extends Fragment {
             String newId = database
                     .getReference()
                     .child("chatrooms")
-                    .child("private")
+                    .child("public")
                     .child(selectedChatroomId)
                     .child("messages")
                     .push()
@@ -252,7 +246,7 @@ public class SubscribedChatroomFragment extends Fragment {
             database
                     .getReference()
                     .child("chatrooms")
-                    .child("private")
+                    .child("public")
                     .child(selectedChatroomId)
                     .child("messages")
                     .child(newId)
@@ -262,6 +256,8 @@ public class SubscribedChatroomFragment extends Fragment {
 
             newMsgField.setText(null);
         });
+
+        return view;
     }
 
     private void refreshSubcription() {

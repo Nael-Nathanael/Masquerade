@@ -43,14 +43,12 @@ public class SubscribedChatRoomListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.chat_room_list, container, false);
+        view = inflater.inflate(R.layout.subscribed_chat_room_list, container, false);
 
         chatRooms = new ArrayList<>();
         targetActivity = requireActivity();
         subscribedChatroomViewModel = new ViewModelProvider(requireActivity()).get(SubscribedChatroomViewModel.class);
         subscribedChatroomNavigationViewModel = new ViewModelProvider(requireActivity()).get(SubscribedChatroomNavigationViewModel.class);
-
-        view.findViewById(R.id.create_room_fab).setVisibility(View.GONE);
 
         setupChatRoomList();
         setupDeletionMethod();
