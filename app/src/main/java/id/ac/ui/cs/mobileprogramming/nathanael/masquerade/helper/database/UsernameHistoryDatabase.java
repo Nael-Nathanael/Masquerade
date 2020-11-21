@@ -6,24 +6,22 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.NotesDao;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.UsernameHistoryDao;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.UsernameHistory;
 
-@Database(entities = {Notes.class}, version = 3, exportSchema = false)
-public abstract class NotesDatabase extends RoomDatabase {
+@Database(entities = {UsernameHistory.class}, version = 4, exportSchema = false)
+public abstract class UsernameHistoryDatabase extends RoomDatabase {
 
-    public abstract NotesDao notesDao();
+    private static UsernameHistoryDatabase INSTANCE;
 
-    private static NotesDatabase INSTANCE;
-
-    public static NotesDatabase getDatabase(final Context context) {
+    public static UsernameHistoryDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (NotesDatabase.class) {
+            synchronized (UsernameHistoryDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room
                             .databaseBuilder(
                                     context.getApplicationContext(),
-                                    NotesDatabase.class,
+                                    UsernameHistoryDatabase.class,
                                     "masq-db"
                             )
                             .fallbackToDestructiveMigration()
@@ -33,4 +31,6 @@ public abstract class NotesDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public abstract UsernameHistoryDao usernameHistoryDao();
 }

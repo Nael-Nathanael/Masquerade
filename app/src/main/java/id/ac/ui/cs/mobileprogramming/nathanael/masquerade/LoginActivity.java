@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.UsernameHistory;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.UsernameHistoryViewModel;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -18,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private EditText usernameField;
+    private UsernameHistoryViewModel usernameHistoryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
             moveToLanding();
         }
 
+        usernameHistoryViewModel = new ViewModelProvider(this).get(UsernameHistoryViewModel.class);
         setContentView(R.layout.activity_login);
 
         usernameField = findViewById(R.id.username_field);
@@ -41,6 +47,13 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("username", usernameField.getText().toString());
             editor.apply();
+
+            usernameHistoryViewModel.insert(
+                    new UsernameHistory(
+                            usernameField.getText().toString()
+                    )
+            );
+
             moveToLanding();
         };
     }

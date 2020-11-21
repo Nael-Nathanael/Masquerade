@@ -55,7 +55,6 @@ public class PrivateChatroomLandingFragment extends Fragment {
                     boolean found = false;
                     for (DataSnapshot childsnap : snapshot.getChildren()) {
                         PrivateChatRoom chatRoom = childsnap.getValue(PrivateChatRoom.class);
-                        assert chatRoom != null;
                         if (chatRoom.getPassword().equals(password)) {
                             privateChatroomViewModel.getSelectedChatroomId().setValue(chatRoom.id);
                             found = true;

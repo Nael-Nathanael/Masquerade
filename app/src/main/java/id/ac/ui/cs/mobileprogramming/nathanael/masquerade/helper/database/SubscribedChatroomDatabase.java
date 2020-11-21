@@ -11,7 +11,7 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.SubscribedC
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
 
-@Database(entities = {SubscribedChatroom.class}, version = 1, exportSchema = false)
+@Database(entities = {SubscribedChatroom.class}, version = 3, exportSchema = false)
 public abstract class SubscribedChatroomDatabase extends RoomDatabase {
 
     public abstract SubscribedChatroomDao subscribedChatroomDao();
