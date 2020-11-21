@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.component.CreatePublicChatroomDialog;
@@ -36,6 +36,10 @@ public class ChatRoomFragment extends Fragment {
 
     private FirebaseDatabase database;
     private ArrayList<ChatRoom> chatRooms;
+    private FragmentActivity targetActivity;
+    private PublicChatroomPagerNavigationViewModel navigationModel;
+    private DatabaseReference reference;
+    private View view;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,13 +51,23 @@ public class ChatRoomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.chat_room_list, container, false);
+        view = inflater.inflate(R.layout.chat_room_list, container, false);
 
-        // Set the adapter
-        Context context = view.getContext();
         database = FirebaseDatabase.getInstance();
+        targetActivity = requireActivity();
+        navigationModel = new ViewModelProvider(requireActivity()).get(PublicChatroomPagerNavigationViewModel.class);
+        reference = database.getReference().child("chatrooms").child("public");
 
-        DatabaseReference reference = database.getReference().child("chatrooms").child("public");
+        navigationModel.getCurrentPage().setValue(0);
+        navigationModel.getSwipeActive().setValue(false);
+
+        setupChatRoomList();
+        setupCreateButton();
+
+        return view;
+    }
+
+    private void setupChatRoomList() {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -63,9 +77,9 @@ public class ChatRoomFragment extends Fragment {
                     chatRooms.add(chatRoom);
                 }
 
-                RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                recyclerView.setAdapter(new MyChatRoomListRecyclerViewAdapter(requireActivity(), chatRooms));
+                RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.note_list);
+                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                recyclerView.setAdapter(new MyChatRoomListRecyclerViewAdapter(targetActivity, chatRooms));
             }
 
             @Override
@@ -73,17 +87,16 @@ public class ChatRoomFragment extends Fragment {
                 Log.d("NaelsTest", String.valueOf(error));
             }
         };
-
         reference.addValueEventListener(valueEventListener);
+    }
 
+    private void setupCreateButton() {
         FloatingActionButton create_fab = view.findViewById(R.id.create_room_fab);
         create_fab.setOnClickListener(v -> {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             CreatePublicChatroomDialog publicChatroomDialog = new CreatePublicChatroomDialog();
             publicChatroomDialog.show(fragmentManager, "dialog");
         });
-
-        return view;
     }
 
     @Override

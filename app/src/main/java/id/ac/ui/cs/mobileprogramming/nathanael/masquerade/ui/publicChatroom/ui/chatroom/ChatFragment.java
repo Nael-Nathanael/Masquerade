@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
@@ -38,10 +38,11 @@ public class ChatFragment extends Fragment {
 
     private FirebaseDatabase database;
     private ArrayList<Message> messages;
-    private PublicChatroomPagerNavigationViewModel navigationModel;
     private String selectedChatroomId;
     private EditText newMsgField;
     private SharedPreferences sharedPreferences;
+    private MyChatRoomRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -58,11 +59,23 @@ public class ChatFragment extends Fragment {
         // Set the adapter
         Context context = view.getContext();
         database = FirebaseDatabase.getInstance();
-        navigationModel = new ViewModelProvider(requireActivity()).get(PublicChatroomPagerNavigationViewModel.class);
+        PublicChatroomPagerNavigationViewModel navigationModel = new ViewModelProvider(requireActivity()).get(PublicChatroomPagerNavigationViewModel.class);
         sharedPreferences = requireActivity().getSharedPreferences("masq-auth", Context.MODE_PRIVATE);
 
         final Observer<String> chatRoomObserver = selectedChatroomId -> {
             this.selectedChatroomId = selectedChatroomId;
+
+            if (selectedChatroomId == null) {
+                view.findViewById(R.id.note_list).setVisibility(View.GONE);
+                view.findViewById(R.id.chat_layout).setVisibility(View.GONE);
+                view.findViewById(R.id.no_content).setVisibility(View.VISIBLE);
+                return;
+            } else {
+                view.findViewById(R.id.note_list).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.chat_layout).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.no_content).setVisibility(View.GONE);
+            }
+
             DatabaseReference reference = database
                     .getReference()
                     .child("chatrooms")
@@ -73,16 +86,16 @@ public class ChatFragment extends Fragment {
             ValueEventListener valueEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Log.d("NaelsTest", String.valueOf(snapshot));
                     messages = new ArrayList<>();
                     for (DataSnapshot childsnap : snapshot.getChildren()) {
                         Message single_message = childsnap.getValue(Message.class);
                         messages.add(single_message);
                     }
 
-                    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+                    recyclerView = (RecyclerView) view.findViewById(R.id.note_list);
                     recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    recyclerView.setAdapter(new MyChatRoomRecyclerViewAdapter(messages));
+                    adapter = new MyChatRoomRecyclerViewAdapter(messages);
+                    recyclerView.setAdapter(adapter);
                 }
 
                 @Override
@@ -91,7 +104,39 @@ public class ChatFragment extends Fragment {
                 }
             };
 
-            reference.addValueEventListener(valueEventListener);
+            reference.addListenerForSingleValueEvent(valueEventListener);
+
+            ChildEventListener childEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    Message new_message = snapshot.getValue(Message.class);
+                    messages.add(new_message);
+                    adapter.notifyItemInserted(messages.size() - 1);
+                    recyclerView.scrollToPosition(messages.size() - 1);
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+
+            reference.addChildEventListener(childEventListener);
         };
 
         navigationModel.getSelectedChatroomId().observe(getViewLifecycleOwner(), chatRoomObserver);
@@ -104,10 +149,14 @@ public class ChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button sendButton = view.findViewById(R.id.send_button);
-        newMsgField = view.findViewById(R.id.new_text_field);
+        Button sendButton = view.findViewById(R.id.send_note_button);
+        newMsgField = view.findViewById(R.id.new_note_field);
 
         sendButton.setOnClickListener(v -> {
+            if (newMsgField.getText().toString().isEmpty()) {
+                return;
+            }
+
             Message newmsg = new Message();
 
             String newId = database
@@ -135,6 +184,8 @@ public class ChatFragment extends Fragment {
                     .setValue(
                             newmsg
                     );
+
+            newMsgField.setText(null);
         });
     }
 }

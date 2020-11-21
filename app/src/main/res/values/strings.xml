@@ -22,4 +22,5 @@
     <string name="create_public_room">Create Public Room</string>
     <string name="create">Create</string>
     <string name="room_name">Room Name</string>
+    <string name="preview_image_without_chat">No Chat</string>
 </resources>

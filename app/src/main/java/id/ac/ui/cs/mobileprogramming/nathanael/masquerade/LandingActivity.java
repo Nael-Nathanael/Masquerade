@@ -40,13 +40,19 @@ public class LandingActivity extends AppCompatActivity {
 
     private void initDrawer() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_public_chatroom, R.id.nav_private_chatroom, R.id.nav_notes, R.id.nav_settings)
+                R.id.nav_public_chatroom,
+                R.id.nav_private_chatroom,
+                R.id.nav_notes,
+                R.id.nav_settings
+        )
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);

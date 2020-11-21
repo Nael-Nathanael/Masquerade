@@ -1,5 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +35,19 @@ public class PublicChatroomFragment extends Fragment {
         PublicChatroomPagerNavigationViewModel navigationModel = new ViewModelProvider(requireActivity()).get(PublicChatroomPagerNavigationViewModel.class);
 
         final Observer<Integer> navigationObserver = targetPage -> {
-            mViewPager.setCurrentItem(targetPage);
-            mViewPager.setUserInputEnabled(targetPage != 0);
+            int orientation = getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                mViewPager.setCurrentItem(targetPage);
+                mViewPager.setUserInputEnabled(targetPage != 0);
+            }
         };
 
-        final Observer<Boolean> swipeObserver = aBoolean -> mViewPager.setUserInputEnabled(aBoolean);
+        final Observer<Boolean> swipeObserver = aBoolean -> {
+            int orientation = getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                mViewPager.setUserInputEnabled(aBoolean);
+            }
+        };
 
         navigationModel.getCurrentPage().observe(getViewLifecycleOwner(), navigationObserver);
         navigationModel.getSwipeActive().observe(getViewLifecycleOwner(), swipeObserver);
