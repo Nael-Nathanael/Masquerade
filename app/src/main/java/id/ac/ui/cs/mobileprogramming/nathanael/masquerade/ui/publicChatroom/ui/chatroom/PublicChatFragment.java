@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +32,8 @@ import java.util.ArrayList;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.adapter.ChatroomRecyclerViewAdapter;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.SubscribedChatroomViewModel;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 
 /**
@@ -37,6 +41,8 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.help
  */
 public class PublicChatFragment extends Fragment {
 
+    FloatingActionButton subscribeButton;
+    FloatingActionButton unsubscribeButton;
     private FirebaseDatabase database;
     private ArrayList<Message> messages;
     private String selectedChatroomId;
@@ -44,6 +50,8 @@ public class PublicChatFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private ChatroomRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
+    private SubscribedChatroomViewModel subscribedChatroomViewModel;
+    private String current_name;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,6 +70,7 @@ public class PublicChatFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         PublicChatroomPagerNavigationViewModel navigationModel = new ViewModelProvider(requireActivity()).get(PublicChatroomPagerNavigationViewModel.class);
         sharedPreferences = requireActivity().getSharedPreferences("masq-auth", Context.MODE_PRIVATE);
+        subscribedChatroomViewModel = new ViewModelProvider(requireActivity()).get(SubscribedChatroomViewModel.class);
 
         final Observer<String> chatRoomObserver = selectedChatroomId -> {
             this.selectedChatroomId = selectedChatroomId;
@@ -70,11 +79,13 @@ public class PublicChatFragment extends Fragment {
                 view.findViewById(R.id.note_list).setVisibility(View.GONE);
                 view.findViewById(R.id.chat_layout).setVisibility(View.GONE);
                 view.findViewById(R.id.no_content).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.subscribe_button).setVisibility(View.GONE);
                 return;
             } else {
                 view.findViewById(R.id.note_list).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.chat_layout).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.no_content).setVisibility(View.GONE);
+                view.findViewById(R.id.subscribe_button).setVisibility(View.VISIBLE);
             }
 
             DatabaseReference reference = database
@@ -142,7 +153,74 @@ public class PublicChatFragment extends Fragment {
 
         navigationModel.getSelectedChatroomId().observe(getViewLifecycleOwner(), chatRoomObserver);
 
+        final Observer<String> chatRoomNameObserver = name -> {
+            this.current_name = name;
+        };
+
+        navigationModel.getSelectedChatroomName().observe(getViewLifecycleOwner(), chatRoomNameObserver);
+
+        subscribeButton = view.findViewById(R.id.subscribe_button);
+        unsubscribeButton = view.findViewById(R.id.unsubscribe_button);
+
+        View.OnClickListener subscribe = v -> {
+
+            subscribedChatroomViewModel.insert(
+                    new SubscribedChatroom(
+                            selectedChatroomId,
+                            current_name
+                    )
+            );
+
+            Toast.makeText(
+                    getContext(),
+                    "You Have Subscribed to This Chat Room",
+                    Toast.LENGTH_SHORT)
+                    .show();
+
+        };
+
+        subscribeButton.setOnClickListener(subscribe);
+
+
+        View.OnClickListener unsubscribe = v -> {
+
+            subscribedChatroomViewModel.delete(
+                    selectedChatroomId
+            );
+
+            Toast.makeText(
+                    getContext(),
+                    "You have remove your subscription to this chat room",
+                    Toast.LENGTH_SHORT)
+                    .show();
+
+        };
+
+        unsubscribeButton.setOnClickListener(unsubscribe);
+
+        refreshSubcription();
+
         return view;
+    }
+
+    private void refreshSubcription() {
+        subscribedChatroomViewModel.getAllSubscribedChatroom().observe(requireActivity(), subscriptions -> {
+            boolean found = false;
+            for (SubscribedChatroom subscribedChatroom : subscriptions) {
+                if (subscribedChatroom.id.equals(selectedChatroomId)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                subscribeButton.setVisibility(View.GONE);
+                unsubscribeButton.setVisibility(View.VISIBLE);
+            } else {
+                subscribeButton.setVisibility(View.VISIBLE);
+                unsubscribeButton.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -188,4 +266,5 @@ public class PublicChatFragment extends Fragment {
             newMsgField.setText(null);
         });
     }
+
 }

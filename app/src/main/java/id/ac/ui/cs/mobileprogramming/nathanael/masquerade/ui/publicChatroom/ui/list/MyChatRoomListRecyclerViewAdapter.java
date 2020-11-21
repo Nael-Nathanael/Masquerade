@@ -50,6 +50,7 @@ public class MyChatRoomListRecyclerViewAdapter extends RecyclerView.Adapter<MyCh
         holder.mView.setOnClickListener(v -> {
             navigationModel.getCurrentPage().setValue(1);
             navigationModel.getSelectedChatroomId().setValue(mValues.get(position).id);
+            navigationModel.getSelectedChatroomName().setValue(mValues.get(position).name);
         });
     }
 

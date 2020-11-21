@@ -8,6 +8,7 @@ public class PublicChatroomPagerNavigationViewModel extends ViewModel {
     private MutableLiveData<Integer> currentPage;
     private MutableLiveData<Boolean> swipeActive;
     private MutableLiveData<String> selectedChatroomId;
+    private MutableLiveData<String> selectedChatroomName;
 
     public MutableLiveData<Integer> getCurrentPage() {
         if (currentPage == null) {
@@ -24,6 +25,13 @@ public class PublicChatroomPagerNavigationViewModel extends ViewModel {
     }
 
     public MutableLiveData<String> getSelectedChatroomId() {
+        if (selectedChatroomId == null) {
+            selectedChatroomId = new MutableLiveData<>(null);
+        }
+        return selectedChatroomId;
+    }
+
+    public MutableLiveData<String> getSelectedChatroomName() {
         if (selectedChatroomId == null) {
             selectedChatroomId = new MutableLiveData<>(null);
         }

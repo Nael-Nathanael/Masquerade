@@ -47,8 +47,7 @@ public class LandingActivity extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_public_chatroom,
                 R.id.nav_private_chatroom,
-                R.id.nav_notes,
-                R.id.nav_settings
+                R.id.nav_notes
         )
                 .setOpenableLayout(drawer)
                 .build();

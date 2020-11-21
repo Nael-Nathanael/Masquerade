@@ -7,23 +7,25 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.NotesDao;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.SubscribedChatroomDao;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
 
-@Database(entities = {Notes.class}, version = 1, exportSchema = false)
-public abstract class NotesDatabase extends RoomDatabase {
+@Database(entities = {SubscribedChatroom.class}, version = 1, exportSchema = false)
+public abstract class SubscribedChatroomDatabase extends RoomDatabase {
 
-    public abstract NotesDao notesDao();
+    public abstract SubscribedChatroomDao subscribedChatroomDao();
 
-    private static NotesDatabase INSTANCE;
+    private static SubscribedChatroomDatabase INSTANCE;
 
-    public static NotesDatabase getDatabase(final Context context) {
+    public static SubscribedChatroomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (NotesDatabase.class) {
+            synchronized (SubscribedChatroomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room
                             .databaseBuilder(
                                     context.getApplicationContext(),
-                                    NotesDatabase.class,
+                                    SubscribedChatroomDatabase.class,
                                     "masq-db"
                             )
                             .fallbackToDestructiveMigration()

@@ -25,4 +25,12 @@
     <string name="preview_image_without_chat">No Chat</string>
     <string name="password">Password</string>
     <string name="enter_private_room">Enter Private Room</string>
+    <string name="settings_logo">Settings Logo</string>
+    <string name="logged_in_as">Logged in as</string>
+    <string name="subscribed_chatroom">Subscribed Chatroom</string>
+    <string name="messages_sent">Messages sent</string>
+    <string name="log_out">Log out</string>
+    <string name="version_settings">V beta.1</string>
+    <string name="subscribe_button">Subscribe Button</string>
+    <string name="unsubscribe_button">Unsubscribe Button</string>
 </resources>

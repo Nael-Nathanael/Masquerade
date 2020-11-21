@@ -83,6 +83,8 @@ public class PrivateChatroomFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
 
+        view.findViewById(R.id.subscribe_button).setVisibility(View.GONE);
+
         final Observer<String> chatRoomObserver = selectedChatroomId -> {
             this.selectedChatroomId = selectedChatroomId;
 
