@@ -17,7 +17,7 @@ import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.helper.SubscribedChatroomNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.SubscribedChatroomNavigationViewModel;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link SubscribedChatroom}.
@@ -47,13 +47,11 @@ public class SubscribedChatroomListRecyclerViewAdapter extends RecyclerView.Adap
         holder.mContentView.setText(mValues.get(position).name);
 
         holder.mView.setOnClickListener(v -> {
-            Log.d("NaelTest", "Item clicked");
             navigationModel.getSelectedChatroomId().setValue(mValues.get(position).id);
             navigationModel.getSelectedChatroomName().setValue(mValues.get(position).name);
         });
 
         holder.mView.setOnLongClickListener(v -> {
-            Log.d("NaelTest", "Item long clicked");
             navigationModel.getMarkedToDelete().setValue(mValues.get(position).id);
             return true;
         });

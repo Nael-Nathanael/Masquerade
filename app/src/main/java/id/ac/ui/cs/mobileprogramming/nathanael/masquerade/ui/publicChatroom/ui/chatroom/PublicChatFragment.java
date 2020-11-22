@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -31,11 +30,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.adapter.ChatroomRecyclerViewAdapter;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.adapter.GeneralChatroomRecyclerViewAdapter;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.SubscribedChatroomViewModel;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.PublicChatroomPagerNavigationViewModel;
 
 /**
  * A fragment representing a list of Items.
@@ -49,7 +48,7 @@ public class PublicChatFragment extends Fragment {
     private String selectedChatroomId;
     private EditText newMsgField;
     private SharedPreferences sharedPreferences;
-    private ChatroomRecyclerViewAdapter adapter;
+    private GeneralChatroomRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
     private SubscribedChatroomViewModel subscribedChatroomViewModel;
     private String current_name;
@@ -107,13 +106,12 @@ public class PublicChatFragment extends Fragment {
 
                     recyclerView = view.findViewById(R.id.note_list);
                     recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                    adapter = new ChatroomRecyclerViewAdapter(messages);
+                    adapter = new GeneralChatroomRecyclerViewAdapter(messages);
                     recyclerView.setAdapter(adapter);
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Log.d("NaelsTest", String.valueOf(error));
                 }
             };
 

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.component.CreatePublicChatroomDialog;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.ChatRoom;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.PublicChatroomPagerNavigationViewModel;
 
 /**
  * A fragment representing a list of Items.
@@ -84,7 +84,6 @@ public class ChatRoomListFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("NaelsTest", String.valueOf(error));
             }
         };
         reference.addValueEventListener(valueEventListener);

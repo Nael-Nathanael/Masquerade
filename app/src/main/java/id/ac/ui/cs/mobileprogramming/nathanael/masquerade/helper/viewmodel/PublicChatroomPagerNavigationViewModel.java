@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

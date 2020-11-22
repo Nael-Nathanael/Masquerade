@@ -14,14 +14,11 @@ import java.util.List;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
 
-/**
- * {@link RecyclerView.Adapter} that can display {@link Message}.
- */
-public class ChatroomRecyclerViewAdapter extends RecyclerView.Adapter<ChatroomRecyclerViewAdapter.ViewHolder> {
+public class GeneralChatroomRecyclerViewAdapter extends RecyclerView.Adapter<GeneralChatroomRecyclerViewAdapter.ViewHolder> {
 
     private final List<Message> mValues;
 
-    public ChatroomRecyclerViewAdapter(List<Message> items) {
+    public GeneralChatroomRecyclerViewAdapter(List<Message> items) {
         mValues = items;
     }
 

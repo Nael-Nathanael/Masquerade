@@ -21,7 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Objects;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.services.ChatRoomSubscriptionNotificationService;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.PublicChatroomPagerNavigationViewModel;
 
 public class LandingActivity extends AppCompatActivity {
 

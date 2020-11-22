@@ -48,8 +48,6 @@ public class ChatRoomSubscriptionNotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("NaelsTest", "Service start command");
-
         started = false;
         totalUnread = 0;
 
@@ -59,7 +57,6 @@ public class ChatRoomSubscriptionNotificationService extends Service {
 
                 started = true;
                 totalUnread = 0;
-                Log.d("NaelsTest", "Service finally started");
 
             }
         }, 2000);
@@ -140,7 +137,5 @@ public class ChatRoomSubscriptionNotificationService extends Service {
                 ref.removeEventListener(childEventListener);
             }
         }
-
-        Log.d("NaelsTest", "Service destroyed");
     }
 }

@@ -9,10 +9,4 @@ public class Message {
     public Message() {
     }
 
-    public Message(String id, String content, String sender, String datetime) {
-        this.id = id;
-        this.content = content;
-        this.sender = sender;
-        this.datetime = datetime;
-    }
 }

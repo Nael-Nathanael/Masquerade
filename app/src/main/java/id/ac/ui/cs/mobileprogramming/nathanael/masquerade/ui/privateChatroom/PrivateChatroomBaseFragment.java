@@ -12,9 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom.helper.PrivateChatroomViewModel;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom.ui.PrivateChatroomFragment;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom.ui.PrivateChatroomLandingFragment;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.PrivateChatroomViewModel;
 
 public class PrivateChatroomBaseFragment extends Fragment {
 

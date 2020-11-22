@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.helper.SubscribedChatroomNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.SubscribedChatroomNavigationViewModel;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.ui.SubscribedChatroomFragment;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.ui.list.SubscribedChatRoomListFragment;
 
@@ -28,7 +28,6 @@ public class SubscribedChatroomBaseFragment extends Fragment {
         subscribedChatroomNavigationViewModel = new ViewModelProvider(requireActivity()).get(SubscribedChatroomNavigationViewModel.class);
 
         final Observer<String> subscribedSelectedObserver = selectedChatroomId -> {
-            Log.d("NaelsTest", "SubscribedChatroomBaseFragment triggered by selected chatroom id");
             final FragmentTransaction ft = getChildFragmentManager().beginTransaction();
             if (selectedChatroomId == null) {
                 ft.replace(R.id.subscribed_primary_frame, new SubscribedChatRoomListFragment(), "Subscribed Chatroom Tag");

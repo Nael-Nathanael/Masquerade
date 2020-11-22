@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom.ui;
+package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.PrivateChatRoom;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.privateChatroom.helper.PrivateChatroomViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.PrivateChatroomViewModel;
 
 public class PrivateChatroomLandingFragment extends Fragment {
 
@@ -55,7 +55,7 @@ public class PrivateChatroomLandingFragment extends Fragment {
                     boolean found = false;
                     for (DataSnapshot childsnap : snapshot.getChildren()) {
                         PrivateChatRoom chatRoom = childsnap.getValue(PrivateChatRoom.class);
-                        if (chatRoom.getPassword().equals(password)) {
+                        if (chatRoom.password.equals(password)) {
                             privateChatroomViewModel.getSelectedChatroomId().setValue(chatRoom.id);
                             found = true;
                         }
@@ -86,6 +86,5 @@ public class PrivateChatroomLandingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("NaelsTest", "private landing resumed");
     }
 }
