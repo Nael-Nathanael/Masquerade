@@ -6,15 +6,11 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.NotesDao;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.SubscribedChatroomDao;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
 
-@Database(entities = {SubscribedChatroom.class}, version = 3, exportSchema = false)
+@Database(entities = {SubscribedChatroom.class}, version = 2, exportSchema = false)
 public abstract class SubscribedChatroomDatabase extends RoomDatabase {
-
-    public abstract SubscribedChatroomDao subscribedChatroomDao();
 
     private static SubscribedChatroomDatabase INSTANCE;
 
@@ -35,4 +31,6 @@ public abstract class SubscribedChatroomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public abstract SubscribedChatroomDao subscribedChatroomDao();
 }

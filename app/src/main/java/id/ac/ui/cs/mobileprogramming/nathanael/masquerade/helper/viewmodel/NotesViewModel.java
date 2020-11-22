@@ -13,9 +13,9 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.repository.Note
 
 public class NotesViewModel extends AndroidViewModel {
 
-    private NotesRepository mRepository;
+    private final NotesRepository mRepository;
 
-    private LiveData<List<Notes>> mAllNotes;
+    private final LiveData<List<Notes>> mAllNotes;
 
     public NotesViewModel(@NonNull Application application) {
         super(application);

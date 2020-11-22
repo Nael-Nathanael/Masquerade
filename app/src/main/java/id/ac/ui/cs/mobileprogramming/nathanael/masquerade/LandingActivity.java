@@ -35,11 +35,15 @@ public class LandingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
-        stopService(new Intent(getApplicationContext(), ChatRoomSubscriptionNotificationService.class));
-
         initAttrs();
         initToolbar();
         initDrawer();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        stopService(new Intent(LandingActivity.this, ChatRoomSubscriptionNotificationService.class));
     }
 
     private void initDrawer() {
@@ -106,6 +110,6 @@ public class LandingActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        startService(new Intent(getApplicationContext(), ChatRoomSubscriptionNotificationService.class));
+        startService(new Intent(LandingActivity.this, ChatRoomSubscriptionNotificationService.class));
     }
 }

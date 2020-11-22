@@ -64,7 +64,9 @@ public class CreatePublicChatroomDialog extends DialogFragment {
     }
 
 
-    /** The system calls this only when creating the layout in a dialog. */
+    /**
+     * The system calls this only when creating the layout in a dialog.
+     */
     @NotNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

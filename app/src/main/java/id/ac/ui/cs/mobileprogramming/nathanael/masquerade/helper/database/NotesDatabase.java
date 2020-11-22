@@ -9,10 +9,8 @@ import androidx.room.RoomDatabase;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.NotesDao;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
 
-@Database(entities = {Notes.class}, version = 3, exportSchema = false)
+@Database(entities = {Notes.class}, version = 5, exportSchema = false)
 public abstract class NotesDatabase extends RoomDatabase {
-
-    public abstract NotesDao notesDao();
 
     private static NotesDatabase INSTANCE;
 
@@ -33,4 +31,6 @@ public abstract class NotesDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public abstract NotesDao notesDao();
 }

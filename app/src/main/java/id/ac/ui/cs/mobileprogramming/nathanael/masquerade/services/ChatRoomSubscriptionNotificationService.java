@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,8 +34,6 @@ public class ChatRoomSubscriptionNotificationService extends Service {
     NotificationCompat.Builder notificationBuilder;
     private FirebaseDatabase database;
     private int totalUnread = 0;
-    private SubscribedChatroomRepository mRepository;
-    private LiveData<List<SubscribedChatroom>> mAllSubscribedChatroom;
     private List<DatabaseReference> references;
     private boolean started = false;
     private ChildEventListener childEventListener;
@@ -44,11 +43,13 @@ public class ChatRoomSubscriptionNotificationService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        throw null;
+        return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("NaelsTest", "Service start command");
+
         started = false;
         totalUnread = 0;
 
@@ -58,6 +59,7 @@ public class ChatRoomSubscriptionNotificationService extends Service {
 
                 started = true;
                 totalUnread = 0;
+                Log.d("NaelsTest", "Service finally started");
 
             }
         }, 2000);
@@ -68,8 +70,8 @@ public class ChatRoomSubscriptionNotificationService extends Service {
                 .setContentTitle("Masquerade")
                 .setSmallIcon(R.drawable.ic_baseline_people_24);
 
-        mRepository = new SubscribedChatroomRepository(getApplication());
-        mAllSubscribedChatroom = mRepository.getmAllChatrooom();
+        SubscribedChatroomRepository mRepository = new SubscribedChatroomRepository(getApplication());
+        LiveData<List<SubscribedChatroom>> mAllSubscribedChatroom = mRepository.getmAllChatrooom();
 
         childEventListener = new ChildEventListener() {
             @Override
@@ -138,5 +140,7 @@ public class ChatRoomSubscriptionNotificationService extends Service {
                 ref.removeEventListener(childEventListener);
             }
         }
+
+        Log.d("NaelsTest", "Service destroyed");
     }
 }

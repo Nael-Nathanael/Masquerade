@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -48,7 +49,7 @@ public class NotesFragment extends Fragment {
         });
 
         EditText new_note_field = view.findViewById(R.id.new_note_field);
-        Button submit_button = view.findViewById(R.id.send_note_button);
+        ImageButton submit_button = view.findViewById(R.id.send_note_button);
         submit_button.setOnClickListener(v -> {
 
             ContentValues values = new ContentValues();

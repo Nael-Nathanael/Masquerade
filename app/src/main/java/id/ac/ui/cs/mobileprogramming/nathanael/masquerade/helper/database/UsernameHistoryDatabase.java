@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.UsernameHistoryDao;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.UsernameHistory;
 
-@Database(entities = {UsernameHistory.class}, version = 4, exportSchema = false)
+@Database(entities = {UsernameHistory.class}, version = 1, exportSchema = false)
 public abstract class UsernameHistoryDatabase extends RoomDatabase {
 
     private static UsernameHistoryDatabase INSTANCE;

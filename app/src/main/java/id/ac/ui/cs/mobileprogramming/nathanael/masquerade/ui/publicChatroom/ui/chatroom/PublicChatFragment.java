@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -226,7 +227,7 @@ public class PublicChatFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button sendButton = view.findViewById(R.id.send_note_button);
+        ImageButton sendButton = view.findViewById(R.id.send_note_button);
         newMsgField = view.findViewById(R.id.new_note_field);
 
         sendButton.setOnClickListener(v -> {

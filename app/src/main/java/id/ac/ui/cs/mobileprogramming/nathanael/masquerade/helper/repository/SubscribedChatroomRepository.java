@@ -7,17 +7,14 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.NotesDao;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.dao.SubscribedChatroomDao;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.database.NotesDatabase;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.database.SubscribedChatroomDatabase;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
 
 public class SubscribedChatroomRepository {
 
-    private SubscribedChatroomDao subscribedChatroomDao;
-    private LiveData<List<SubscribedChatroom>> mAllChatrooom;
+    private final SubscribedChatroomDao subscribedChatroomDao;
+    private final LiveData<List<SubscribedChatroom>> mAllChatrooom;
 
     public SubscribedChatroomRepository(Application application) {
         SubscribedChatroomDatabase db = SubscribedChatroomDatabase.getDatabase(application);
@@ -39,7 +36,7 @@ public class SubscribedChatroomRepository {
 
     private static class insertAsyncTask extends AsyncTask<SubscribedChatroom, Void, Void> {
 
-        private SubscribedChatroomDao mAsyncTaskDao;
+        private final SubscribedChatroomDao mAsyncTaskDao;
 
         insertAsyncTask(SubscribedChatroomDao subscribedChatroomDao) {
             mAsyncTaskDao = subscribedChatroomDao;
@@ -55,7 +52,7 @@ public class SubscribedChatroomRepository {
 
     private static class deleteAsyncTask extends AsyncTask<String, Void, Void> {
 
-        private SubscribedChatroomDao mAsyncTaskDao;
+        private final SubscribedChatroomDao mAsyncTaskDao;
 
         deleteAsyncTask(SubscribedChatroomDao subscribedChatroomDao) {
             mAsyncTaskDao = subscribedChatroomDao;

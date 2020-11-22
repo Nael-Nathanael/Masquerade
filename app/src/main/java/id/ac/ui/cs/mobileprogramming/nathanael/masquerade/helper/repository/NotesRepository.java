@@ -13,8 +13,8 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Notes;
 
 public class NotesRepository {
 
-    private NotesDao notesDao;
-    private LiveData<List<Notes>> mAllNotes;
+    private final NotesDao notesDao;
+    private final LiveData<List<Notes>> mAllNotes;
 
     public NotesRepository(Application application) {
         NotesDatabase db = NotesDatabase.getDatabase(application);
@@ -32,7 +32,7 @@ public class NotesRepository {
 
     private static class insertAsyncTask extends AsyncTask<Notes, Void, Void> {
 
-        private NotesDao mAsyncTaskDao;
+        private final NotesDao mAsyncTaskDao;
 
         insertAsyncTask(NotesDao notesDao) {
             mAsyncTaskDao = notesDao;

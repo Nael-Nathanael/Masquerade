@@ -17,7 +17,6 @@ import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom.helper.SubscribedChatroomNavigationViewModel;
 
 /**

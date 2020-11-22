@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:name="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.chatroom.ChatFragment"
-    android:background="@android:color/background_dark"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark">
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,10 +15,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
+        android:contentDescription="@string/subscribe_button"
+        android:src="@drawable/ic_baseline_exit_to_app_24"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/subscribe_button" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,6 +29,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:contentDescription="@string/unsubscribe_button"
+        android:src="@drawable/ic_baseline_check_box_outline_blank_24"
         android:visibility="gone"
         app:backgroundTint="#FB4646"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,11 +82,15 @@
                 android:textColor="#000000"
                 android:textColorHint="#000000" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/send_note_button"
                 android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="10dp" />
+                android:layout_height="50dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/purple_500"
+                android:contentDescription="@string/send"
+                android:src="@drawable/ic_baseline_send_24"
+                android:tint="#FFFFFF" />
         </LinearLayout>
 
         <ImageView

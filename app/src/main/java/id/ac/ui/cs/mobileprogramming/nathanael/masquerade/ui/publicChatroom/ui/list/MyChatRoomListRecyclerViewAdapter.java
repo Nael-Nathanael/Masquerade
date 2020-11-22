@@ -1,7 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.list;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.ChatRoom;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.helper.PublicChatroomPagerNavigationViewModel;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link ChatRoom}.

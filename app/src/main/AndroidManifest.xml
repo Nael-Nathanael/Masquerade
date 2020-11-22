@@ -3,6 +3,7 @@
     package="id.ac.ui.cs.mobileprogramming.nathanael.masquerade">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".App"
@@ -26,13 +27,13 @@
         <service
             android:name=".services.ChatRoomSubscriptionNotificationService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <provider
             android:name=".provider.NotesProvider"
             android:authorities="id.ac.ui.cs.mobileprogramming.nathanael.masquerade.provider"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".LandingActivity"
