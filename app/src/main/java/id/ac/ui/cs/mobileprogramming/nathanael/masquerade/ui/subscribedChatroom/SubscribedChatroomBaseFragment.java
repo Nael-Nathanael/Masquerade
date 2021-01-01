@@ -1,7 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.subscribedChatroom;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -5,6 +5,8 @@ public class Message {
     public String content;
     public String sender;
     public String datetime;
+    public double locationAltitude;
+    public double locationLongitude;
 
     public Message() {
     }

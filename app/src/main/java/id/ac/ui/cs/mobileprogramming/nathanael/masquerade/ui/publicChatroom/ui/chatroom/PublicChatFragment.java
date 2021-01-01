@@ -1,9 +1,10 @@
 package id.ac.ui.cs.mobileprogramming.nathanael.masquerade.ui.publicChatroom.ui.chatroom;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,8 +38,10 @@ import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.adapter.GeneralChatroomRecyclerViewAdapter;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.Message;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.model.SubscribedChatroom;
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.SubscribedChatroomViewModel;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.SubscribedChatroomViewModel;
+
+import static id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.Constant.PERMISSION_REQUEST_CODE;
 
 /**
  * A fragment representing a list of Items.
@@ -52,6 +59,8 @@ public class PublicChatFragment extends Fragment {
     private RecyclerView recyclerView;
     private SubscribedChatroomViewModel subscribedChatroomViewModel;
     private String current_name;
+    private Double currentLongitude = 0d;
+    private Double currentAltitude = 0d;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,6 +73,18 @@ public class PublicChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_bubble_list, container, false);
+
+        if (!checkPermission()) {
+            requestPermission();
+        }
+
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        fusedLocationClient
+                .getLastLocation()
+                .addOnSuccessListener(requireActivity(), location -> {
+                    currentAltitude = location.getAltitude();
+                    currentLongitude = location.getLongitude();
+                });
 
         // Set the adapter
         Context context = view.getContext();
@@ -248,6 +269,8 @@ public class PublicChatFragment extends Fragment {
             newmsg.datetime = String.valueOf(android.text.format.DateFormat.format("MM/dd/yyyy hh:mm", new java.util.Date()));
             newmsg.content = newMsgField.getText().toString();
             newmsg.sender = sharedPreferences.getString("username", null);
+            newmsg.locationLongitude = currentLongitude;
+            newmsg.locationAltitude = currentAltitude;
 
             assert newId != null;
             database
@@ -265,4 +288,13 @@ public class PublicChatFragment extends Fragment {
         });
     }
 
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+        int result2 = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        return result == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_CODE);
+    }
 }

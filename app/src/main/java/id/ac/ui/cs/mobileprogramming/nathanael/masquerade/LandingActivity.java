@@ -1,13 +1,19 @@
 package id.ac.ui.cs.mobileprogramming.nathanael.masquerade;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,10 +24,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
-import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.services.ChatRoomSubscriptionNotificationService;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.PublicChatroomPagerNavigationViewModel;
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.services.ChatRoomSubscriptionNotificationService;
+
+import static id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.Constant.PERMISSION_REQUEST_CODE;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -111,5 +121,36 @@ public class LandingActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         startService(new Intent(LandingActivity.this, ChatRoomSubscriptionNotificationService.class));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+                boolean fine_location_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean coarse_location_accepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                if (fine_location_accepted && coarse_location_accepted) {
+                    Toast.makeText(this, "You are Masquerade!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Access to location denied! You are Anonymous!", Toast.LENGTH_SHORT).show();
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) || shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                        showMessageOKCancel(
+                                (dialog, which) -> {
+                                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_CODE);
+                                }
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    private void showMessageOKCancel(DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(this)
+                .setMessage("Masquerade will be pleased to know your location. But we could respect your decisions of anonymity")
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
     }
 }
