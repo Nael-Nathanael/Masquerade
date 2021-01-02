@@ -5,7 +5,6 @@ import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
-import android.util.Log;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -69,7 +68,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
             // Create a rotation transformation for the triangle
             long time = SystemClock.uptimeMillis() - start;
-            Log.d("naelanim", "uptime millis is " + time);
             switch (moving) {
                 case "top": {
                     posy = posy + 0.0001f * ((int) time);

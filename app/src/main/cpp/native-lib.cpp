@@ -29,3 +29,4 @@ Java_id_ac_ui_cs_mobileprogramming_nathanael_masquerade_LandingActivity_combineF
     std::string hello = normalstring + normalstring2;
     return env->NewStringUTF(hello.c_str());
 }
+
