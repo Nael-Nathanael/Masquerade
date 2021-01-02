@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.LandingActivity;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.R;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.viewmodel.NotesViewModel;
 import id.ac.ui.cs.mobileprogramming.nathanael.masquerade.provider.NotesProvider;
@@ -49,11 +50,14 @@ public class NotesFragment extends Fragment {
 
         EditText new_note_field = view.findViewById(R.id.new_note_field);
         ImageButton submit_button = view.findViewById(R.id.send_note_button);
+
+
         submit_button.setOnClickListener(v -> {
 
             ContentValues values = new ContentValues();
+            String notes_from_native = LandingActivity.combineFromJNI("Notes: ", new_note_field.getText().toString());
             values.put(NotesProvider.SENDER, sharedPreferences.getString("username", null));
-            values.put(NotesProvider.CONTENT, new_note_field.getText().toString());
+            values.put(NotesProvider.CONTENT, notes_from_native);
 
             Thread inserting = new Thread(() -> {
                 String url = NotesProvider.URL;

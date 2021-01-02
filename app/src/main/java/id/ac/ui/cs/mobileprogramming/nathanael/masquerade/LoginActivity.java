@@ -29,10 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         sharedPreferences = getSharedPreferences("masq-auth", Context.MODE_PRIVATE);
 
-        if (sharedPreferences.contains("username")) {
-            moveToLanding();
-        }
-
         usernameHistoryViewModel = new ViewModelProvider(this).get(UsernameHistoryViewModel.class);
         setContentView(R.layout.activity_login);
 

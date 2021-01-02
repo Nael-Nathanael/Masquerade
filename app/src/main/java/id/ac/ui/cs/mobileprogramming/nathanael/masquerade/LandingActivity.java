@@ -35,10 +35,20 @@ import static id.ac.ui.cs.mobileprogramming.nathanael.masquerade.helper.Constant
 
 public class LandingActivity extends AppCompatActivity {
 
+    static {
+        System.loadLibrary("native-lib");
+    }
+
     private AppBarConfiguration mAppBarConfiguration;
     private SharedPreferences sharedPreferences;
     private boolean canExit;
     private PublicChatroomPagerNavigationViewModel navigationModel;
+
+    /**
+     * A native method that is implemented by the 'native-lib' native library,
+     * which is packaged with this application.
+     */
+    public static native String combineFromJNI(String message1, String message2);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
