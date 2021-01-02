@@ -52,7 +52,7 @@
             android:theme="@style/Theme.Masquerade.Fullscreen" />
         <activity
             android:name=".SplashActivity"
-            android:label="SplashScreen"
+            android:label="@string/app_name"
             android:theme="@style/Theme.Masquerade.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

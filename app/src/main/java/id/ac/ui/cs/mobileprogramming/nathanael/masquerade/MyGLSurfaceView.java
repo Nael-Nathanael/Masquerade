@@ -66,7 +66,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
             Matrix.setLookAtM(viewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1f, 0f);
 
-            // Create a rotation transformation for the triangle
+            // Create a translation transformation for the triangle
             long time = SystemClock.uptimeMillis() - start;
             switch (moving) {
                 case "top": {
